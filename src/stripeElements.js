@@ -8,16 +8,17 @@ export const baseStyle = {
   base: {
     color: '#32325d',
     lineHeight: '24px',
-    fontFamily: 'Helvetica Neue',
+    fontFamily: 'FFScalaSansWebProRegular,"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif',
     fontSmoothing: 'antialiased',
     fontSize: '16px',
+    lineHeight: '1.4',
     '::placeholder': {
-      color: '#aab7c4'
+      color: '#777c7f'
     }
   },
   invalid: {
-    color: '#fa755a',
-    iconColor: '#fa755a'
+    color: '#ff3939',
+    iconColor: '#ff3939'
   }
 }
 
@@ -34,7 +35,7 @@ function init(key) {
 
   if (!Stripe.instance.elements) {
     console.error('Stripe V3 library not loaded!')
-  } else {
+  } else if (Stripe.elements === null) {
     Stripe.elements = Stripe.instance.elements()
   }
 }
@@ -45,7 +46,9 @@ export function create(elementType, key_or_stripe, options = {}) {
 
   const element = Stripe.elements.create(elementType, options)
 
-  Stripe.createToken = (options) => Stripe.instance.createToken(element, options)
+  if (Stripe.createToken === null) {
+    Stripe.createToken = (options) => Stripe.instance.createToken(element, options)
+  }
 
   return element
 }

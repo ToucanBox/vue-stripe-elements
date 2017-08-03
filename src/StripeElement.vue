@@ -31,7 +31,7 @@ export default {
   methods: {
     blur () { this._element.blur() },
     focus () { this._element.focus() },
-    update () { this._element.update() }
+    update (options) { this._element.update(options) }
   }
 }
 </script>
