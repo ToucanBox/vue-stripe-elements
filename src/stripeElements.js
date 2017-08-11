@@ -36,7 +36,11 @@ function init(key) {
   if (!Stripe.instance.elements) {
     console.error('Stripe V3 library not loaded!')
   } else if (Stripe.elements === null) {
-    Stripe.elements = Stripe.instance.elements()
+    if (window.locale === undefined) {
+      Stripe.elements = Stripe.instance.elements();
+    } else {
+      Stripe.elements = Stripe.instance.elements({locale: window.locale});
+    }
   }
 }
 
